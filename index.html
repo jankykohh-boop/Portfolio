@@ -22,6 +22,8 @@
     --red: #C62A3A;
     --ivory: #EFE5CC;
     --cobalt: #3A5CC2;
+    --onyx: #0A0B10;
+    --oxblood: #7A1C2A;
     --dark: #07090F;
     --term: #070A12;
     --term-ink: #E9E4D8;
@@ -334,10 +336,12 @@
   .impact { font: 700 .82rem var(--mono); color: var(--ink); white-space: nowrap; }
 
   /* ===== Projects ===== */
-  #projects { --bar: var(--red); }
-  #projects .bar { color: #fff; }
+  #projects { --bar: var(--onyx); border-top-color: var(--gold); }
+  #projects .bar { color: var(--gold); box-shadow: inset 0 0 0 1.5px var(--gold); border-bottom: 0; }
   .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr)); gap: 44px 20px; margin-top: 56px; }
-  .proj { --c: var(--red); --on: #fff; position: relative; }
+  .proj { --c: var(--onyx); --on: var(--gold); position: relative; }
+  .proj .fbody { border-top-color: var(--gold) !important; }
+  .proj .ftab { box-shadow: inset 0 0 0 1.5px var(--gold); }
   .proj .fbody { height: auto; display: flex; flex-direction: column; gap: 14px; color: var(--ink); background: var(--sheet-2);
     border: 1px solid var(--line); border-top: 4px solid var(--c); box-shadow: none; transition: transform .4s var(--spring), box-shadow .4s; }
   .proj:hover .fbody, .proj:hover .ftab { transform: translateY(-6px); }
@@ -381,7 +385,8 @@
   .cert span { display: block; font-size: .78rem; color: var(--muted); margin-top: 4px; }
 
   /* ===== Contact ===== */
-  #contact { --bar: var(--ivory); }
+  #contact { --bar: var(--oxblood); }
+  #contact .bar { color: #fff; }
   .contact-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; margin-top: 30px; align-items: end; }
   .contact-grid h2 { font-size: clamp(1.6rem, 3.4vw, 2.6rem); font-weight: 800; line-height: 1.15; }
   .contact-grid > div > p { color: var(--muted); margin-top: 12px; max-width: 52ch; }
@@ -442,6 +447,7 @@
   .dtab .n { opacity: .65; font-size: .68rem; font-weight: 500; }
   .dtab .kr { font: 700 .74rem var(--kr); opacity: 0; max-width: 0; overflow: hidden; transition: opacity .3s, max-width .3s; }
   .dtab:hover { transform: translateY(0); }
+  .dtab[style*="--edge"] { box-shadow: inset 0 0 0 1.5px var(--edge), 0 -6px 14px -8px rgba(0,0,0,.6); }
   .dtab[aria-current="true"] { transform: translateY(-4px); padding-bottom: 18px; }
   .dtab[aria-current="true"] .kr { opacity: 1; max-width: 4em; }
   .dock-strip { position: relative; z-index: 1; }
@@ -812,9 +818,9 @@ const SECTIONS = [
   { id: 'about', label: 'about', kr: '소개', c: 'var(--red)', on: '#fff' },
   { id: 'zennix', label: 'zennix', kr: '제품', c: 'var(--gold)', on: 'var(--dark)' },
   { id: 'experience', label: 'experience', kr: '경력', c: 'var(--cobalt)', on: '#fff' },
-  { id: 'projects', label: 'projects', kr: '작업', c: 'var(--red)', on: '#fff' },
+  { id: 'projects', label: 'projects', kr: '작업', c: 'var(--onyx)', on: 'var(--gold)', edge: 'var(--gold)' },
   { id: 'certifications', label: 'certs', kr: '자격증', c: 'var(--navy)', on: '#fff' },
-  { id: 'contact', label: 'contact', kr: '연락', c: 'var(--ivory)', on: 'var(--dark)' }
+  { id: 'contact', label: 'contact', kr: '연락', c: 'var(--oxblood)', on: '#fff' }
 ];
 
 const ORGS = [
@@ -952,7 +958,7 @@ $('#certs').innerHTML = CERTS.map(c => `<li class="cert" style="--c:${c.c}"><sma
 /* ===== Dock: folder-tab nav + scroll spy ===== */
 const dock = $('#dock');
 $('#dockTabs').innerHTML = '<span class="dock-label" aria-hidden="true">contents ▸</span>' + SECTIONS.map((x, i) =>
-  `<button class="dtab" style="--c:${x.c};--on:${x.on};--i:${i}" data-to="${x.id}"><span class="n">${i + 1}</span>${x.id === 'cover' ? '~ home' : 'cd ./' + x.label}</button>`).join('');
+  `<button class="dtab" style="--c:${x.c};--on:${x.on};--i:${i}${x.edge ? ';--edge:' + x.edge : ''}" data-to="${x.id}"><span class="n">${i + 1}</span>${x.id === 'cover' ? '~ home' : 'cd ./' + x.label}</button>`).join('');
 const links = $$('.dtab');
 const go = id => document.getElementById(id).scrollIntoView();
 function setActive(id) {
@@ -960,7 +966,7 @@ function setActive(id) {
     const on = l.dataset.to === id;
     l.setAttribute('aria-current', on);
     if (on) {
-      dock.style.setProperty('--act', l.style.getPropertyValue('--c'));
+      dock.style.setProperty('--act', l.style.getPropertyValue('--edge') || l.style.getPropertyValue('--c'));
       l.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     }
   });
