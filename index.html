@@ -101,7 +101,7 @@
   .rv.in { opacity: 1; transform: none; }
   /* folder tab sticking up from each sheet, labelled as a path; position staggers per sheet */
   .bar {
-    position: absolute; bottom: 100%; left: min(var(--tabx, 28px), calc(100% - 190px));
+    position: absolute; bottom: 100%; left: max(14px, var(--tabx, 24px));
     background: var(--bar); color: var(--dark);
     padding: 8px 20px 6px; border-radius: 14px 14px 0 0;
     font: 700 .78rem var(--mono); white-space: nowrap;
@@ -869,7 +869,8 @@ sheets.forEach((s, i) => {
   const bar = document.createElement('div');
   bar.className = 'bar';
   bar.textContent = s.dataset.path;
-  s.style.setProperty('--tabx', ['28px', '22%', '44%', '64%', '30%', '50%', '70%'][i]);
+  // tabs step evenly from left to right in page order, like folders in a drawer
+  s.style.setProperty('--tabx', `calc(24px + (100% - 230px) * ${i / Math.max(sheets.length - 1, 1)})`);
   s.prepend(bar);
 });
 
