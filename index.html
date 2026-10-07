@@ -22,7 +22,7 @@
     --red: #C62A3A;
     --ivory: #EFE5CC;
     --cobalt: #3A5CC2;
-    --onyx: #0A0B10;
+    --onyx: #1C1D25;
     --oxblood: #7A1C2A;
     --dark: #07090F;
     --term: #070A12;
@@ -151,7 +151,8 @@
   @keyframes blink { 50% { opacity: 0; } }
 
   /* ===== Cover ===== */
-  #cover { --bar: var(--ivory); }
+  #cover { --bar: var(--navy); }
+  #cover .bar { color: #fff; }
   #cover .sheet-in { padding-bottom: 0; min-height: min(880px, 94vh); display: flex; flex-direction: column; }
   .grid-bg {
     position: absolute; inset: 0; pointer-events: none;
@@ -233,8 +234,7 @@
   .dfold.f2 { left: 13.5%; top: 72px; z-index: 2; --c: var(--gold); --on: var(--dark); }
   .dfold.f3 { left: 27%; top: 144px; z-index: 3; --c: var(--cobalt); --on: #fff; }
   .dfold.f4 { left: 40.5%; top: 216px; z-index: 4; --c: var(--onyx); --on: var(--gold); }
-  .dfold.f4 .fbody, .dfold.f4 .ftab { box-shadow: inset 0 0 0 1.5px var(--gold); }
-  .dfold.f5 { left: 54%; top: 288px; z-index: 5; --c: var(--navy); --on: #fff; }
+  .dfold.f5 { left: 54%; top: 288px; z-index: 5; --c: var(--ivory); --on: var(--dark); }
   .dfold.f5 .big-yr { position: absolute; right: 24px; top: 100px; font: 500 clamp(1.3rem, 2.6vw, 2.2rem) var(--mono); opacity: .7; }
 
   /* ===== About ===== */
@@ -338,12 +338,10 @@
   .impact { font: 700 .82rem var(--mono); color: var(--ink); white-space: nowrap; }
 
   /* ===== Projects ===== */
-  #projects { --bar: var(--onyx); border-top-color: var(--gold); }
-  #projects .bar { color: var(--gold); box-shadow: inset 0 0 0 1.5px var(--gold); border-bottom: 0; }
+  #projects { --bar: var(--onyx); }
+  #projects .bar { color: var(--gold); }
   .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr)); gap: 44px 20px; margin-top: 56px; }
   .proj { --c: var(--onyx); --on: var(--gold); position: relative; }
-  .proj .fbody { border-top-color: var(--gold) !important; }
-  .proj .ftab { box-shadow: inset 0 0 0 1.5px var(--gold); }
   .proj .fbody { height: auto; display: flex; flex-direction: column; gap: 14px; color: var(--ink); background: var(--sheet-2);
     border: 1px solid var(--line); border-top: 4px solid var(--c); box-shadow: none; transition: transform .4s var(--spring), box-shadow .4s; }
   .proj:hover .fbody, .proj:hover .ftab { transform: translateY(-6px); }
@@ -368,8 +366,7 @@
   @media (max-width: 600px) { .proj-stats { grid-template-columns: repeat(2, 1fr); } }
 
   /* ===== Certifications ===== */
-  #certifications { --bar: var(--navy); }
-  #certifications .bar { color: #fff; }
+  #certifications { --bar: var(--ivory); }
   .degree { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-top: 32px; padding: 24px 28px; border-radius: 18px; background: var(--cobalt); color: #fff; }
   .degree h3 { font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 900; font-variation-settings: "wdth" 112; text-transform: uppercase; line-height: 1.05; }
   .degree p { font-weight: 600; }
@@ -817,12 +814,12 @@
 /* ===== Content ===== */
 // Sections, in page order; drives the dock, shortcuts and command palette.
 const SECTIONS = [
-  { id: 'cover', label: '~', kr: '홈', c: 'var(--ivory)', on: 'var(--dark)' },
+  { id: 'cover', label: '~', kr: '홈', c: 'var(--navy)', on: '#fff' },
   { id: 'about', label: 'about', kr: '소개', c: 'var(--red)', on: '#fff' },
   { id: 'zennix', label: 'zennix', kr: '제품', c: 'var(--gold)', on: 'var(--dark)' },
   { id: 'experience', label: 'experience', kr: '경력', c: 'var(--cobalt)', on: '#fff' },
-  { id: 'projects', label: 'projects', kr: '작업', c: 'var(--onyx)', on: 'var(--gold)', edge: 'var(--gold)' },
-  { id: 'certifications', label: 'certs', kr: '자격증', c: 'var(--navy)', on: '#fff' },
+  { id: 'projects', label: 'projects', kr: '작업', c: 'var(--onyx)', on: 'var(--gold)' },
+  { id: 'certifications', label: 'certs', kr: '자격증', c: 'var(--ivory)', on: 'var(--dark)' },
   { id: 'contact', label: 'contact', kr: '연락', c: 'var(--oxblood)', on: '#fff' }
 ];
 
