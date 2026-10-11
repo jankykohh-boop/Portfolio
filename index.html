@@ -956,6 +956,10 @@ renderQueue('all');
 /* ===== Certifications ===== */
 $('#certs').innerHTML = CERTS.map(c => `<li class="cert" style="--c:${c.c}"><small>${c.s}</small><b>${c.b}</b>${c.t ? `<span>${c.t}</span>` : ''}</li>`).join('');
 
+/* ===== Open at the top (unless the link names a section) ===== */
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+if (!location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
 /* ===== Dock: folder-tab nav + scroll spy ===== */
 const dock = $('#dock');
 $('#dockTabs').innerHTML = '<span class="dock-label" aria-hidden="true">contents ▸</span>' + SECTIONS.map((x, i) =>
@@ -968,7 +972,10 @@ function setActive(id) {
     l.setAttribute('aria-current', on);
     if (on) {
       dock.style.setProperty('--act', l.style.getPropertyValue('--edge') || l.style.getPropertyValue('--c'));
-      l.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      // scroll only the tab strip sideways; scrollIntoView also moved the page itself in some browsers
+      const strip = l.parentElement;
+      const r = l.getBoundingClientRect(), sr = strip.getBoundingClientRect();
+      strip.scrollLeft += (r.left - sr.left) - (sr.width - r.width) / 2;
     }
   });
 }
